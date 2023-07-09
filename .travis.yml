@@ -1,0 +1,23 @@
+sudo: required
+language: generic
+services:
+  - docker
+
+before_install:
+  - docker build -t yassir2s/reat-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true yassir2s/react-test npm test
+
+after_success:
+  - docker build -t yassir2s/multi-client ./client
+  - docker build -t yassir2s/multi-nginx ./nginx
+  - docker build -t yassir2s/multi-server ./server
+  - docker build -t yassir2s/multi-worker ./worker
+  #Log in the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" ---password-stdin
+  # push images to docker hub
+  - docker push yassir2s/multi-client
+  - docker push yassir2s/multi-nginx
+  - docker push yassir2s/multi-server
+  - docker push yassir2s/multi-worker
