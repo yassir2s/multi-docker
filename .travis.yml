@@ -4,7 +4,7 @@ services:
   - docker
 
 before_install:
-  - docker build -t yassir2s/reat-test -f ./client/Dockerfile.dev ./client
+  - docker build -t yassir2s/react-test -f ./client/Dockerfile.dev ./client
 
 script:
   - docker run -e CI=true yassir2s/react-test npm run test
