@@ -15,7 +15,7 @@ after_success:
   - docker build -t yassir2s/multi-server ./server
   - docker build -t yassir2s/multi-worker ./worker
   #Log in the docker CLI
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" ---password-stdin
+  - docker login -u "$DOCKER_ID" -p "$DOCKER_PASSWORD"
   # push images to docker hub
   - docker push yassir2s/multi-client
   - docker push yassir2s/multi-nginx
